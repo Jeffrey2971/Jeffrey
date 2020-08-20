@@ -1,0 +1,749 @@
+@echo off & color 0f & Setlocal enabledelayedexpansion
+Mode con cols=65 lines=10
+:main
+echo;
+echo [%Time%] 设置变量名
+rem **************************************************初始化开始
+set app_a=6D5BE5A4F57AC5E846A0A0E73948CEF6.exe
+set app_b=0A3D28C8F1A76E63FDDA0CC5C7DCD593.exe
+set app_c=B6A74B8C158341DC94B292D63ABE4FCE.exe
+set app_d=695C1A10CA2F0E3F1EF03DE95BDF385A.exe
+set app_e=D436E2E982B88720534586355B02545D.exe
+set Monitor_file=Monitor_file.cmd
+set Monitor_exp=Monitor_exp.vbs
+set Winbox=error_box.cmd
+set Filelock=Exit_exp.vbs
+set Monitor_cpu=Cpu.cmd
+set mail=email.vbs
+set num-SMALL=6
+set num-BIG=12
+rem 发送账户
+set email-from=改为你自己的
+rem 收件账户
+set email-to=改为你自己的
+rem 发件授权码
+set email-pas=改为你自己的
+rem 发件域名地址
+set email-server=改为你自己的
+rem 发件端口
+set email-port=改为你自己的
+rem 发件线程安全端口
+set email-safe=1
+set copy_location=%~dp0
+set close=0
+set close*=1
+set location=%HOMEDRIVE%\
+set number={645FF040-5081-101B-9F08-00AA002F954E}
+set number*=C6EEA0560CD6F377E78DFF2C85CC9122
+set bak*=AA5C56F3208B58A5A8CFC5A7E25EBEE2
+set line=Mode con cols=65 lines=10
+set line*=Mode con cols=90 lines=90
+rem **************************************************
+set error*=echo Error：另一端操作未完成重新运行是不被允许的，
+set lock*=安全策略：请不要关闭计算机，以免文件丢失，
+set wor=请不要更改这个文件夹内的任何文件，后果自负，
+set pas*=设置你的密码，
+set main*=输入密码来访问你的文件夹 #Cm输入M=更多
+set pas**=输入密码已确认你的身份 Q=返回
+set pas***=你的密码为
+set err=加密失败，私密文件夹内有进程正在运行，关闭后重试，
+set wor**=完成，
+set pas****=错误的输入，
+set lost-err=检测到没有相关文件，
+set lost-read=成功完成解密，
+set lost-read1=任意键返回， #Rn注意，返回后会清空当前文件夹所有数据，请做好备份
+set pas*****=剩余次数，
+set eor*=密码错误,  剩余输入次数，
+set wait*=等待操作,完成后任意键加密，解锁后保护措施将失效
+set lost=安全策略：文件已经被转移，如需访问请在程序中 M - S 文件丢失访问
+set wait**=执行中，
+set wait***=执行中，这个操作现在不被允许，
+set wait-pas=请在弹出新的窗口中操作，
+set uni=卸载完成，任意键清除本程序，
+set pause*=任意键返回
+set pause**=任意键继续
+set error**=密码必须是六至十二位数之间，请重新设置
+set error***=密码不能为空，请重新设置
+rem **************************************************color
+rem 路径\文件\color\#
+rem n  黑色      N  深灰色          :  current color
+rem r  红色      R  鲜红
+rem g  原谅色    G  亮绿色
+rem b  蓝色      B  亮蓝色 
+rem c  青色      C  亮青色
+rem m  品红色    M  鲜亮洋红色
+rem y  棕色      Y  黄色            :  颜色以黑白为主
+rem w  灰色      W  白色
+:+ Color Echo by Jason Hood <jadoxa@yahoo.com.au>.
+:+ Version 0.90 (12 July, 2004). Public Domain.
+:+ http://misc.adoxa.cjb.net/
+:+ Display text using any color you like.
+:+ Usage: cecho text
+:+        cecho --map[b|B|x]
+:+        cecho --<attr>
+:+ "text" is output as-is, with the exception of '#' sequences:
+:+ fb        foreground color and optional background color:
+:+             n  black      N  dark gray          :  current color
+:+             r  red        R  bright red
+:+             g  green      G  bright green
+:+             b  blue       B  bright blue
+:+             c  cyan       C  bright cyan
+:+             m  magenta    M  bright magenta
+:+             y  brown      Y  yellow
+:+             w  gray       W  white
+:+ ~        restore original color
+:+ =        keep current color on exit
+:+ ;        don't end with new line
+:+ #        #                ,        tab
+:+ a        &                _        new line
+:+ o        |                d        ding
+:+ s        <                h        backspace
+:+ l        >                [        escape
+:+ xhh        character represented by one- or two-digit hexadecimal number
+:+ ddc        repeat 'c' (which may be a '#' sequence) dd times, which may be
+:+         a one- or two-digit decimal number
+:+ -        stop '#' processing
+:+ +        start '#' processing (only if stopped)
+:+ .        really stop '#' processing (quote remaining text)
+:+ Any character following '#' not present in the above list will be output
+:+ untranslated (along with the '#').
+:+ --map will display all the foreground colors with normal background colors;
+:+ b will use the bright background colors; and B will display both (assumes 80
+:+ columns). --mapx will display the extended ASCII characters.
+:+ --<attr> will set the color to <attr>, a decimal number between 0 and 255.
+:+ The current attribute is returned when displaying "text".
+
+rem **************************************************camear
+rem 调用摄像头，触控运行
+:+ CommandCam  Copyright (C) 2012-2013 Ted Burke
+:+ This program comes with ABSOLUTELY NO WARRANTY;
+:+ This is free software, and you are welcome to
+:+ redistribute it under certain conditions;
+:+ See the GNU General Public License v3,
+:+ <http://www.gnu.org/licenses/gpl.txt>
+
+:+ http://batchloaf.wordpress.com/CommandCam
+:+ This version 24-1-2013
+rem **************************************************editV
+rem 密码屏蔽，转换为* 64/32同理
+:+ EditV32 2.2 - (C) 2006-2010 by Bill Stewart (bstewart@iname.com)
+:+ Allows interactive editing of environment variables.
+:+ Usage: EditV32 [-b] [-e] [-l len] [-m] [-n] [-o] [-p prompt] [-t n] [-u] var
+:+ -b         Place cursor at the beginning of the input string.
+:+ -e         Do not insert shell escape characters before reserved shell
+:+            characters in the environment variable's contents.
+:+ -l len     Allow no more than 'len' characters (1 to 2047).
+:+ -m         Masked input ('*' appears for each typed character).
+:+ -n         Allow only numeric input (0-9).
+:+ -o         Start in overtype mode.
+:+ -p prompt  Prompt the user with 'prompt' (enclose in quotes if it has spaces).
+:+ -t n       Assume Enter was pressed if nothing typed in 'n' seconds.
+:+ -u         Force entered characters to uppercase.
+:+ var        The environment variable's name (required).
+:+ Exit codes:
+:+ 1  Error on the command line
+:+ 2  Input line was blank
+:+ 3  Environment variable was not changed
+:+ 4  Program aborted with Ctrl-C
+rem **************************************************lock
+rem 适用所有系统，开关锁
+:+ Lock.exe
+set /a sy=3
+set process=
+echo [%Time%] 检查版本是否匹配
+for /f "tokens=4,5 delims=. " %%a in ('ver') do if %%a%%b geq 62 (goto sys_tesing)
+rem **************************************************
+:sys_ok
+echo [%Time%] 获取管理员权限
+set uac=~uac_permission_tmp_%random%
+md "%SystemRoot%\system32\%uac%" 2>nul
+if %errorlevel%==0 ( rd "%SystemRoot%\system32\%uac%" >nul 2>nul ) else (
+    echo set uac = CreateObject^("Shell.Application"^)>"%temp%\%uac%.vbs"
+    echo uac.ShellExecute "%~s0","","","runas",1 >>"%temp%\%uac%.vbs"
+    echo WScript.Quit >>"%temp%\%uac%.vbs"
+    "%temp%\%uac%.vbs" /f
+    del /f /q "%temp%\%uac%.vbs" & exit )
+:sys_ok.
+echo [%Time%] 检查初始化
+if exist %location%Command\date\Initialization.f (goto Safe..) else (Goto Safe.)
+:Safe.
+cls
+echo;
+echo 检测到始首次初始化，请检查以下事件后任意键继续
+echo;
+echo 1、关闭相关杀毒软件_设置setx时可能会被拦截
+echo 2、关闭相关桌面助手_设置文件路径时可能会出错
+echo 3、添加杀毒软件白名单_设置及输入密码时可能会被拦截
+pause >nul
+:Safe..
+echo [%Time%] 检查相关文件
+set qus=setx.exe & if not exist "%Windir%\system32\setx.exe" goto error
+if not exist %location%Command md %location%Command
+if not exist %location%Command\date md %location%Command\date
+if not exist %location%Command\date\setx_command.f setx Command %location%Command & echo ; > %Command%\date\setx_command.f
+if not exist %location%backups_ md %location%backups_
+if not exist %location%\Command\logs md %location%\Command\logs
+echo %wor% > %Command%\注意事项.log
+echo %wor% > %Command%\date\注意事项.log
+echo [%Time%] 拷贝及删除
+rem
+copy "%copy_location%%app_a%" %location%backups_ >nul 2>nul & del /f "%copy_location%%app_a%" >nul 2>nul
+copy "%copy_location%%app_b%" %location%backups_ >nul 2>nul & del /f "%copy_location%%app_b%" >nul 2>nul
+copy "%copy_location%%app_c%" %location%backups_ >nul 2>nul & del /f "%copy_location%%app_c%" >nul 2>nul
+copy "%copy_location%%app_d%" %location%backups_ >nul 2>nul & del /f "%copy_location%%app_d%" >nul 2>nul
+copy "%copy_location%%app_e%" %location%backups_ >nul 2>nul & del /f "%copy_location%%app_e%" >nul 2>nul
+rem
+set qus=%app_a% & if not exist %Command%\%app_a% copy %location%backups_\%app_a% %Command% & if not exist %Command%\%app_a% goto error >nul 2>nul
+set qus=%app_b% & if not exist %Command%\%app_b% copy %location%backups_\%app_b% %Command% & if not exist %Command%\%app_b% goto error >nul 2>nul
+set qus=%app_c% & if not exist %Command%\%app_c% copy %location%backups_\%app_c% %Command% & if not exist %Command%\%app_c% goto error >nul 2>nul
+set qus=%app_d% & if not exist %Command%\%app_d% copy %location%backups_\%app_d% %Command% & if not exist %Command%\%app_d% goto error >nul 2>nul
+set qus=%app_e% & if not exist %Command%\%app_e% copy %location%backups_\%app_e% %Command% & if not exist %Command%\%app_e% goto error >nul 2>nul
+rem **************************************************
+echo [%Time%] 配置调整
+if /i "%PROCESSOR_IDENTIFIER:~0,3%"=="X86" (set int=%app_b%) ELSE (set int=%app_c%)
+%command%\%app_d% @ /dis
+attrib +r -h +s %0 1>nul 2>nul
+echo y| cacls %0 /c /t /p everyone:r 1>nul 2>nul
+if not exist "%Command%\date\Lock.txt" goto set_password
+echo Y|cacls %Command%\date\Lock.txt /P everyone:F >nul 2>nul
+for /f "tokens=2 delims=:" %%a in ('findstr /b "密码为:" "%Command%\date\Lock.txt"') do set password=%%a
+echo Y|cacls %Command%\date\Lock.txt /P everyone:N >nul 2>nul
+goto inbox_password
+rem **************************************************报告
+:set_password
+rem 需要注意的是这里有三个变量 获取的长度 strlen 输入的长度 pas 预设的长度 num 是长度而不是大小 变量不能清除 需要超级变量
+cls
+echo;
+set pas=
+%Command%\%app_a% #Wn^>^> #Mn%pas*%
+echo;
+%Command%\%int% -m -p " >> " pas
+if /i "%pas%"=="" cls & echo; & echo %error***% & ping /n 5 127.1>nul & goto main
+for /l %%i in (0,1,1000) do if "!pas:~%%i,1!"=="" set strlen=%%i && goto :end
+:end
+if %strlen% LSS %num-SMALL% (cls & echo; & echo %error**% & ping /n 5 127.1>nul & goto main) else (cls & end_next)
+:ned_next
+if %strlen% GTR %num-BIG% (cls & echo; & echo %error**% & ping /n 5 127.1>nul & goto main) else (cls & echo;)
+%Command%\%app_a% #Cm %pas***% :
+echo;
+%Command%\%app_a% #Rn%pas%
+echo 密码为:%pas%>%Command%\date\Lock.txt
+echo; > %Command%\date\Initialization.f
+echo;
+%Command%\%app_a% #Rn%pause**%
+pause >nul & goto main
+rem **************************************************
+:pas_error
+cls
+rem 报告
+set /a sy-=1
+echo;
+echo; >> %Command%\date\report.log
+echo [At %date% - %time% - %username%] %pas****%：%pas% ^| %pas*****% %sy% >> %Command%\date\report.log
+%Command%\%app_a% #Rn %eor*% %sy%
+ping /n 2 127.1>nul
+if %sy%==0 goto over_inbox
+goto inbox_password
+:add
+if exist %Command%\date\stop_open.f (%error*% & pause >nul & exit) else (goto add.)
+:add.
+echo; >> %Command%\date\report.log
+echo [At %date% - %time% - %username%] 添加了开机启动 >> %Command%\date\report.log
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v Lock /d "%~dp0%~nx0" /f & echo ; > %Command%\date\start_command.f
+Goto inbox_password
+rem **************************************************
+:File_monitoring
+echo %wait**%
+rem 创建文件监控
+echo [%Time%] 创建文件监控
+echo @echo off >> %Command%\date\%Monitor_file%
+echo :begin >> %Command%\date\%Monitor_file%
+echo ping 127.1 -n 4 ^>nul >> %Command%\date\%Monitor_file%
+echo set /a b=100*1024 >> %Command%\date\%Monitor_file%
+echo set /a a=5*1024*1024 >> %Command%\date\%Monitor_file%
+echo for %%%%a in (%Command%\date\report.log) do if %%%%~za geq %%b%% del /q /f ^"%%%%a^" >> %Command%\date\%Monitor_file%
+echo for %%%%a in (%Command%\date\report-file.log) do if %%%%~za geq %%a%% del /q /f ^"%%%%a^" >> %Command%\date\%Monitor_file%
+echo if exist %Command%\date\out_ilook.f (del /f %Command%\date\out_ilook.f ^& exit) else  (echo;) >> %Command%\date\%Monitor_file%
+echo if exist %location%%number*% (goto inspect) else (goto safe.) >> %Command%\date\%Monitor_file%
+echo :safe. >> %Command%\date\%Monitor_file%
+echo echo; ^>^> %Command%\date\report.log >> %Command%\date\%Monitor_file%
+echo echo [At %%date%% - %%time%% - %%username%%] 文件夹正常 ^>^> %Command%\date\report.log >> %Command%\date\%Monitor_file%
+echo goto begin >> %Command%\date\%Monitor_file%
+echo :inspect >> %Command%\date\%Monitor_file% 
+echo if exist %Command%\date\open_.f (goto goto begin) else (goto error_file) >> %Command%\date\%Monitor_file%
+echo :error_file >> %Command%\date\%Monitor_file% 
+rem 安全策略
+rem 远程确定
+echo echo; ^>^> %Command%\date\running.f >> %Command%\date\%Monitor_file%
+echo echo; ^>^> %Command%\date\file_stop.f >> %Command%\date\%Monitor_file%
+echo if not exist ^"%location%%bak*%^" md ^"%location%%bak*%^" >> %Command%\date\%Monitor_file%
+echo echo y^| cacls ^"%location%%number*%^" /c /t /p everyone:f >> %Command%\date\%Monitor_file%
+echo echo %lost% ^>^> %Command%\date\report-file.log >> %Command%\date\%Monitor_file%
+echo dir /s /b ^"%location%%number*%^" ^>^> %Command%\date\report-file.log >> %Command%\date\%Monitor_file%
+echo xcopy ^"%location%%number*%\*.*^" ^"%location%%bak*%^" /s /y  >> %Command%\date\%Monitor_file%
+echo ren ^"%location%%bak*%^" ^"%bak*%.%number%^" >nul 2>nul >> %Command%\date\%Monitor_file%
+echo attrib +a +s +r +h ^"%location%%bak*%.%number%^" >nul 2>nul >> %Command%\date\%Monitor_file%
+echo del /f /s /q ^"%location%%number*%^" >> %Command%\date\%Monitor_file%
+echo rd /s /q ^"%location%%number*%^" >> %Command%\date\%Monitor_file%
+echo del /f C:\Command\date\running.f >> %Command%\date\%Monitor_file%
+echo echo; ^>^> C:\Command\date\report.log >> %Command%\date\%Monitor_file%
+echo echo [At %date% - %time% - %username%] 文件监控：文件夹被异常打开，已执行相关操作 ^>^> %Command%\date\report.log >> %Command%\date\%Monitor_file%
+echo echo; ^>^> C:\Command\date\file_ready.f >> %Command%\date\%Monitor_file%
+Goto inbox_password
+:File_monitoring*
+echo 1
+echo %wait**%
+rem 创建文件监控
+echo fdpath2=^"C:\Command,C:\backups_,C:\Command\date,C:\C6EEA0560CD6F377E78DFF2C85CC9122,C:\Command\date\openi.vbs,C:\Command\date\Cpu.cmd,C:\Command\date\error_box.cmd,C:\Command\date\Exit_exp.vbs,C:\Command\date\Monitor_exp.vbs,C:\Command\date\Monitor_file.cmd,C:\Command\date\out_all.cmd^">> %Command%\date\Monitor_exp.vbs
+echo fdpath2=Replace(fdpath2, ^"\^", ^"/^")>> %Command%\date\Monitor_exp.vbs
+echo fdpath3=^"Lock.txt,Report.log^">> %Command%\date\Monitor_exp.vbs
+echo arr=Split(^"%%,{,},[,],^&,^^,#,`, ^", ^",^")>> %Command%\date\Monitor_exp.vbs
+echo arr2=split(fdpath2,^",^")>> %Command%\date\Monitor_exp.vbs
+echo arr3=split(fdpath3,^",^")>> %Command%\date\Monitor_exp.vbs
+echo for i = 0 to ubound(arr2)>> %Command%\date\Monitor_exp.vbs
+echo If Right(arr2(i), 1) = ^"/^" Then arr2(i)=Left(arr2(i), Len(arr2(i))-1)>> %Command%\date\Monitor_exp.vbs
+echo If Len(arr2(i)) = 2 Then arr2(i)=arr2(i) ^& ^"/^">> %Command%\date\Monitor_exp.vbs
+echo next>> %Command%\date\Monitor_exp.vbs
+echo Set objShell = CreateObject(^"Wscript.Shell^")>> %Command%\date\Monitor_exp.vbs
+echo Set ShellApp = CreateObject(^"Shell.Application^")>> %Command%\date\Monitor_exp.vbs
+echo do while true>> %Command%\date\Monitor_exp.vbs
+echo for i = 0 to ubound(arr2)>> %Command%\date\Monitor_exp.vbs
+echo Set oWindows = ShellApp.Windows>> %Command%\date\Monitor_exp.vbs
+echo For Each SubWds In oWindows>> %Command%\date\Monitor_exp.vbs
+echo If LCase(SubWds.LocationURL) = LCase(^"file:///^" ^& encode(arr2(i), arr)) Then>> %Command%\date\Monitor_exp.vbs
+echo SubWds.Quit()>> %Command%\date\Monitor_exp.vbs
+echo objShell.Run(^"%Command%\date\%Winbox%^")>> %Command%\date\Monitor_exp.vbs
+echo exit for>> %Command%\date\Monitor_exp.vbs
+echo End If>> %Command%\date\Monitor_exp.vbs
+echo next>> %Command%\date\Monitor_exp.vbs
+echo Next>> %Command%\date\Monitor_exp.vbs
+echo for j = 0 to ubound(arr3)>> %Command%\date\Monitor_exp.vbs
+echo objShell.Run ^"cmd.exe /c taskkill /FI  ^" ^& ^"^"^"^" ^& ^"WINDOWTITLE eq ^" ^& arr3(j) ^& ^" - 记事本" & "^"^"^" ^& ^" /IM notepad.exe /F^",0,true>> %Command%\date\Monitor_exp.vbs
+echo next>> %Command%\date\Monitor_exp.vbs
+echo wscript.sleep 1000>> %Command%\date\Monitor_exp.vbs
+echo loop>> %Command%\date\Monitor_exp.vbs
+echo Function encode(ByVal path, ByRef arr)>> %Command%\date\Monitor_exp.vbs
+echo dim i>> %Command%\date\Monitor_exp.vbs
+echo For i=0 To UBound(arr)>> %Command%\date\Monitor_exp.vbs
+echo path=Replace(path, arr(i), ^"%%^" ^& Hex(Asc(arr(i))))>> %Command%\date\Monitor_exp.vbs
+echo Next>> %Command%\date\Monitor_exp.vbs
+echo encode=path>> %Command%\date\Monitor_exp.vbs
+echo End Function>> %Command%\date\Monitor_exp.vbs
+goto inbox_password
+:File_out
+echo [%Time%] 创建文件夹监控
+echo fdpath=^"%location%%number*%^" >> %Command%\date\%Filelock%
+echo arr=Split(^"%%,{,},[,],^&,^^,#,`, ^", ^",^") >> %Command%\date\%Filelock%
+echo fdpath=Replace(fdpath, ^"\^", ^"/^") >> %Command%\date\%Filelock%
+echo If Right(fdpath, 1) = ^"/^" Then fdpath=Left(fdpath, Len(fdpath)-1) >> %Command%\date\%Filelock%
+echo If Len(fdpath) = 2 Then fdpath=fdpath ^& ^"/^" >> %Command%\date\%Filelock%
+echo Set ShellApp = CreateObject(^"Shell.Application^") >> %Command%\date\%Filelock%
+echo Set oWindows = ShellApp.Windows >> %Command%\date\%Filelock%
+echo For Each SubWds In oWindows >> %Command%\date\%Filelock%
+echo If LCase(SubWds.LocationURL) = LCase(^"file:///^" ^& encode(fdpath, arr)) Then >> %Command%\date\%Filelock%
+echo SubWds.Quit() >> %Command%\date\%Filelock%
+echo End If >> %Command%\date\%Filelock%
+echo Next >> %Command%\date\%Filelock%
+echo Function encode(ByVal path, ByRef arr) >> %Command%\date\%Filelock%
+echo For i=0 To UBound(arr) >> %Command%\date\%Filelock%
+echo path=Replace(path, arr(i), ^"%%^" ^& Hex(Asc(arr(i)))) >> %Command%\date\%Filelock%
+echo Next >> %Command%\date\%Filelock%
+echo encode=path >> %Command%\date\%Filelock%
+echo End Function >> %Command%\date\%Filelock%
+Goto inbox_password
+:CPU-new
+echo :again>> %Command%\date\%Monitor_cpu%
+echo set strlen=95 >> %Command%\date\%Monitor_cpu%
+echo set num=7 >> %Command%\date\%Monitor_cpu%
+echo for /f ^"tokens=2 delims==^" %%%%a in ('wmic path Win32_PerfFormattedData_PerfOS_Processor get PercentProcessorTime /value^^^|findstr ^"PercentProcessorTime^"') do (>> %Command%\date\%Monitor_cpu%
+echo set UseCPU=%%%%a>> %Command%\date\%Monitor_cpu%
+echo )>> %Command%\date\%Monitor_cpu%
+echo if %%UseCPU%% geq %%strlen%% (set /a cpu+=1 ^& goto nat) else (goto again)>> %Command%\date\%Monitor_cpu%>> %Command%\date\%Monitor_cpu%
+echo :nat>> %Command%\date\%Monitor_cpu%
+echo if %%cpu%% gtr %%num%% (start %Command%\date\out_all.cmd ^& exit) else (goto again)>> %Command%\date\%Monitor_cpu%>> %Command%\date\%Monitor_cpu%
+echo @echo off >> %Command%\date\out_all.cmd
+echo color 0a >> %Command%\date\out_all.cmd
+echo Mode con cols=68 lines=5 >> %Command%\date\out_all.cmd >> %Command%\date\out_all.cmd
+echo set app_a=6D5BE5A4F57AC5E846A0A0E73948CEF6.exe >> %Command%\date\out_all.cmd
+echo set app_b=0A3D28C8F1A76E63FDDA0CC5C7DCD593.exe >> %Command%\date\out_all.cmd
+echo set app_c=B6A74B8C158341DC94B292D63ABE4FCE.exe >> %Command%\date\out_all.cmd
+echo set app_d=695C1A10CA2F0E3F1EF03DE95BDF385A.exe >> %Command%\date\out_all.cmd
+echo set app_e=D436E2E982B88720534586355B02545D.exe >> %Command%\date\out_all.cmd
+echo call %Command%\%app_d% >> %Command%\date\out_all.cmd
+echo Title Winbox_安全提示 >> %Command%\date\out_all.cmd
+echo echo; >> %Command%\date\out_all.cmd
+echo for /l %%%%a in (10,-1,0) do ( >> %Command%\date\out_all.cmd
+echo echo 检测到系统负荷过大，这可能是程序引发的错误，将在 %%%%a 秒后执行相关操作 >> %Command%\date\out_all.cmd
+echo for /l %%%%b in (1,1,7000) do (ver ^>nul) >> %Command%\date\out_all.cmd
+echo cls >> %Command%\date\out_all.cmd
+echo ) >> %Command%\date\out_all.cmd
+echo wmic process where name=^"wscript.exe^" call terminate >> %Command%\date\out_all.cmd
+echo wmic process where name=^"cmd.exe^" call terminate >> %Command%\date\out_all.cmd
+echo exit >> %Command%\date\out_all.cmd
+Goto inbox_password
+:email
+echo On Error resume next >> %Command%\date\%mail%
+echo y=^"%Command%\date\Report_file.log^" >> %Command%\date\%mail%
+echo Set objh = CreateObject(^"MSXML2.XMLHTTP^") >> %Command%\date\%mail%
+echo objh.open ^"GET^", ^"https://www.baidu.com^", False >> %Command%\date\%mail%
+echo objh.send >> %Command%\date\%mail%
+echo If objh.statustext = ^"OK^" Then >> %Command%\date\%mail%
+echo set fso = createobject(^"scripting.filesystemobject^") >> %Command%\date\%mail%
+echo set f = fso.opentextfile(^"%Command%\date\report.log^",1) >> %Command%\date\%mail%
+echo txt = f.readall >> %Command%\date\%mail%
+echo f.close >> %Command%\date\%mail%
+echo NameS = ^"http://schemas.microsoft.com/cdo/configuration/^" >> %Command%\date\%mail%
+echo Set Email = CreateObject(^"CDO.Message^") >> %Command%\date\%mail%
+echo Email.From = ^"%email-from%^" >> %Command%\date\%mail%
+echo Email.To = ^"%email-to%^" >> %Command%\date\%mail%
+echo Email.subject = now >> %Command%\date\%mail%
+echo Email.Textbody = txt >> %Command%\date\%mail%
+echo Email.AddAttachment y >> %Command%\date\%mail%
+echo Email.Configuration.Fields.Item(NameS ^& ^"sendusing^") = 2 >> %Command%\date\%mail%
+echo Email.Configuration.Fields.Item(NameS ^& ^"smtpserver^") = ^"%email-server%^" >> %Command%\date\%mail%
+echo Email.Configuration.Fields.Item(NameS ^& ^"smtpserverport^") = %email-port% >> %Command%\date\%mail%
+echo Email.Configuration.Fields.Item(NameS ^& ^"smtpauthenticate^") = %email-safe% >> %Command%\date\%mail%
+echo Email.Configuration.Fields.Item(NameS ^& ^"sendusername^") = ^"%email-from%^" >> %Command%\date\%mail%
+echo Email.Configuration.Fields.Item(NameS ^& ^"sendpassword^") = ^"%email-pas%^" >> %Command%\date\%mail%
+echo Email.Configuration.Fields.Update >> %Command%\date\%mail%
+echo Email.send >> %Command%\date\%mail%
+echo end if >> %Command%\date\%mail%
+goto inbox_password
+:pas_error
+cls
+rem 报告
+set /a sy-=1
+echo;
+echo; >> %Command%\date\report.log
+echo [At %date% - %time% - %username%] %pas****%：%pas% ^| %pas*****% %sy% >> %Command%\date\report.log
+%Command%\%app_a% #Rn %eor*% %sy%
+ping /n 2 127.1>nul
+if %sy%==0 goto out
+goto main
+ut
+rem 次数上限，关闭explorer.exe，调用摄像头，写入报告，启用explorer.exe，关机
+cls
+Taskkill /f /im explorer.exe >nul 2>nul
+reg add HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\system /v DisableTaskMgr /t reg_dword /d %close*% /f >nul
+echo [At %date% - %time% - %username%] 错误过多，关闭计算机 >> %Command%\date\report.log
+echo;
+echo   %wait**%
+%Command%\%app_e% >nul 2>nul
+copy .\image.bmp %Command%\date >nul 2>nul
+ren %Command%\date\image.bmp %random%.bmp >nul 2>nul
+del /f .\image.bmp >nul 2>nul
+reg add HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\system /v DisableTaskMgr /t reg_dword /d %close% /f >nul
+shutdown -s -t 0
+goto inbox_password
+:Winbox*
+echo @echo off ^& Mode con cols=65 lines=10>> %Command%\date\%Winbox%
+echo call %Command%\%app_d% >> %Command%\date\%Winbox%
+echo set app_a=6D5BE5A4F57AC5E846A0A0E73948CEF6.exe >> %Command%\date\%Winbox%
+echo set app_b=0A3D28C8F1A76E63FDDA0CC5C7DCD593.exe >> %Command%\date\%Winbox%
+echo set app_c=B6A74B8C158341DC94B292D63ABE4FCE.exe >> %Command%\date\%Winbox%
+echo set app_d=695C1A10CA2F0E3F1EF03DE95BDF385A.exe >> %Command%\date\%Winbox%
+echo set app_e=D436E2E982B88720534586355B02545D.exe >> %Command%\date\%Winbox%
+echo Title Winbox_安全提示>> %Command%\date\%Winbox%
+echo rem 运用 ver 做到无延迟>> %Command%\date\%Winbox%
+echo for /l %%%%a in (3,-1,0) do (>> %Command%\date\%Winbox%
+echo echo *                                                             * >> %Command%\date\%Winbox%
+echo echo; >> %Command%\date\%Winbox%
+echo echo; >> %Command%\date\%Winbox%
+echo echo; >> %Command%\date\%Winbox%
+echo %Command%\%app_a% #Rn           拒绝访问，这个窗口将在 %%%%a 秒后退出 >> %Command%\date\%Winbox%
+echo echo; >> %Command%\date\%Winbox%
+echo echo; >> %Command%\date\%Winbox%
+echo echo; >> %Command%\date\%Winbox%
+echo echo *                                                             * >> %Command%\date\%Winbox%
+echo for /l %%%%b in (1,1,7000) do (ver ^>nul) >> %Command%\date\%Winbox%
+echo cls >> %Command%\date\%Winbox%
+echo ) >> %Command%\date\%Winbox%
+echo exit >> %Command%\date\%Winbox%
+Goto inbox_password
+rem **************************************************
+:inbox_password
+echo; > %Command%\date\Initialization.f
+echo %wait**%
+rem **************************************************结束
+title 你的飞 _ Jeffrey2971@outlook.com
+echo Y|cacls %Command%\date\Lock.txt /P everyone:F >nul 2>nul
+for /f "tokens=2 delims=:" %%a in ('findstr /b "密码为:" %Command%\date\Lock.txt') do set password=%%a
+echo Y|cacls %Command%\date\Lock.txt /P everyone:N >nul 2>nul
+del /f %Command%\date\Open_.f >nul 2>nul
+Del /f /s /q %Command%\date\file_stop.f >nul 2>nul
+rem 检查文件监控是否存在
+del /f %Command%\date\openi.vbs >nul 2>nul
+echo createobject("wscript.shell").run "%Command%\date\%Monitor_file%",0 >> %Command%\date\openi.vbs
+echo createobject("wscript.shell").run "%Command%\date\%Monitor_cpu%",0 >> %Command%\date\openi.vbs
+if not exist %Command%\date\%Monitor_file% Goto File_monitoring
+if not exist %Command%\date\%Monitor_exp% Goto File_monitoring*
+if not exist %Command%\date\%Winbox% Goto Winbox*
+if not exist %Command%\date\%Filelock% Goto File_out
+if not exist %Command%\date\%Monitor_cpu% Goto CPU-new
+if not exist %Command%\date\%mail% Goto email
+if not exist %Command%\date\%pasbox% goto made
+start %Command%\date\Monitor_exp.vbs
+start %Command%\date\openi.vbs
+rem 启用文件监控&如果运行多个本程序并没有解锁
+if exist %location%%number*% (echo.) else (del /f /s /q %Command%\date\stop_open.f >nul 2>nul)
+if exist %Command%\date\stop_open.f (%error*% & pause > nul & exit) else (taskkill /FI  "WINDOWTITLE eq Monitor_file" /IM cmd.exe /F >nul 2>nul)
+cls
+echo;
+set pas=
+%Command%\%app_a% #Wn^>^> #Mn%main*%
+echo;
+%Command%\%int% -m -p " >> " pas
+if /i "%pas%"=="m" goto more
+if /i "%pas%"=="" goto pas_error
+if /i "%pas%"=="%password%" goto open_mybox
+goto pas_error
+pen_mybox
+if exist %Command%\date\file_stop.f (reg add HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\system /v DisableTaskMgr /t reg_dword /d %close*% /f & goto echo.) else (Goto open_mybox..)
+pen_mybox..
+if exist %Command%\date\stop_open.f (%error*% & pause >nul & exit) else (goto open_mybox.)
+:echo.
+wmic process where name="wscript.exe" call terminate
+for /f "tokens=2 delims==" %%a in ('wmic path Win32_PerfFormattedData_PerfOS_Processor get PercentProcessorTime /value^|findstr "PercentProcessorTime"') do (
+set UseCPU=%%a
+)
+rem 等待文件转移
+if not exist %Command%\date\file_ready.f Taskkill /f /im explorer.exe >nul 2>nul & echo %lock*% [%Time%]CPU：%UseCPU%%% & ping 127.1 -n 4 >nul & goto echo.
+del /f /s /q %Command%\date\file_ready.f >nul 2>nul
+reg add HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\system /v DisableTaskMgr /t reg_dword /d %close% /f >nul
+for /f "delims=" %%i in (%Command%\date\report.log) do (set a=%%i)
+tasklist /nh|find /i "explorer.exe" >nul 2>nul
+if ERRORLEVEL 1 (start explorer.exe >nul 2>nul) else (echo;)
+echo %a%,任意键打开
+pause >nul
+pen_mybox.
+rem 解锁
+cls
+echo;
+%Command%\%app_a% #Yn %wait**%
+echo; >> %Command%\date\report.log
+echo [At %date% - %time% - %username%] 文件夹被打开 >> %Command%\date\report.log
+echo;
+if not exist "%location%%number*%.%number%" md "%location%%number*%.%number%"
+attrib -a -s -r -h "%location%%number*%.%number%"
+ren "%location%%number*%.%number%" %number*%
+echo ; > %Command%\date\Open_.f
+cls
+echo;
+%Command%\%app_a% #Gn %wor**%
+:stop_
+echo;
+echo; > %Command%\date\stop_open.f
+wmic process where name="wscript.exe" call terminate
+start %Command%\date\email.vbs
+%Command%\%app_a% #Yn %wait*%
+echo;
+start "" "%location%%number*%"
+pause>nul
+rem 加锁
+start %Command%\date\%Filelock%
+rd /s /q "%location%%number*%.%number%" >nul 2>nul
+ren "%location%%number*%" %number*%.%number% >nul 2>nul
+attrib +a +s +r +h "%location%%number*%.%number%" >nul 2>nul
+rem 判断是否加密
+if exist %location%%number*% (set process=#Rn%err%) else (set process=#Gn%wor**%)
+%Command%\%app_a%  %process%
+echo; >> %Command%\date\report.log
+echo [At %date% - %time% - %username%] %process% >> %Command%\date\report.log
+if not exist %location%%number*% del /f /s /q %Command%\date\stop_open.f >nul 2>nul & goto main
+echo; > %Command%\date\stop_open.f
+goto stop_
+:clean_password
+if exist %Command%\date\stop_open.f (%error*% & pause >nul & exit) else (goto clean_password.)
+:clean_password.
+rem 清除密码确认
+echo; >> %Command%\date\report.log
+echo [At %date% - %time% - %username%] 请求了更改密码 >> %Command%\date\report.log
+cls
+echo;
+set pas=
+%Command%\%app_a% #Wn^>^> #Mn%pas**%
+echo;
+%Command%\%int% -m -p " >> " pas
+if /i "%pas%"=="q" goto inbox_password
+if /i "%pas%"=="" goto pas_error
+if /i "%pas%"=="%password%" goto clean_password_do
+goto pas_error
+:clean_password_do
+rem 删除密码
+cls
+echo Y|cacls %Command%\date\Lock.txt /P everyone:F >nul 2>nul
+echo;
+%Command%\%app_a% #Yn %wait**%
+echo;
+set /a sy=3
+del /f /q "%Command%\date\Lock.txt" >nul 2>nul
+echo; >> %Command%\date\report.log
+echo At %date% - %time% - [%username%] 删除了密码 >> %Command%\date\report.log
+%Command%\%app_a% #Gn %wor**%
+echo;
+ping /n 3 127.1>nul
+goto main
+ver_inbox
+cls
+Taskkill /f /im explorer.exe >nul 2>nul
+reg add HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\system /v DisableTaskMgr /t reg_dword /d %close*% /f >nul
+echo [At %date% - %time% - %username%] 错误过多，关闭计算机 >> %Command%\date\report.log
+echo;
+echo   %wait**%
+%Command%\%app_e% >nul 2>nul
+copy .\image.bmp %Command%\date >nul 2>nul
+ren %Command%\date\image.bmp %random%.bmp >nul 2>nul
+del /f .\image.bmp >nul 2>nul
+reg add HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\system /v DisableTaskMgr /t reg_dword /d %close% /f >nul
+shutdown -s -t 0
+exit
+:error
+set /a cls+=1
+cls
+echo;
+echo 初始化失败，文件丢失
+echo;
+echo 错误：%qus%
+echo;
+echo %cls%
+pause >nul
+goto main
+:more
+if exist %Command%\date\running.f (echo %wait***% & pause >nul & goto main) else (echo;)
+if exist %Command%\date\stop_open.f (%error*% & pause >nul & exit) else (goto more.)
+:more.
+rem 主页1
+cls
+set more1=
+echo;
+%Command%\%app_a% #WgEnter X=删除密码                                              ^>
+%Command%\%app_a% #WgEnter C=添加开机启动                                          ^>
+%Command%\%app_a% #WgEnter D=关闭开机启动                                          ^>
+%Command%\%app_a% #WgEnter E=完全退出                                              ^>
+%Command%\%app_a% #WgEnter S=文件丢失                                              ^>
+%Command%\%app_a% #WgEnter F=卸载                                                  ^>
+%Command%\%app_a% #WgEnter A=Set                                                   ^>
+%Command%\%app_a% #WgEnter Q=返回                                                  ^>
+set /p more1=
+if /i "%more1%"=="c" goto add
+if /i "%more1%"=="x" goto clean_password
+if /i "%more1%"=="f" goto uninstall
+if /i "%more1%"=="d" goto del_boot
+if /i "%more1%"=="q" goto inbox_password
+if /i "%more1%"=="e" goto exit_out
+if /i "%more1%"=="s" goto safemode
+if /i "%more1%"=="a" %line*% & set & pause >nul & %line% & goto inbox_password
+goto more
+:exit_out
+wmic process where name="wscript.exe" call terminate
+wmic process where name="cmd.exe" call terminate
+echo; >> %Command%\date\report.log
+echo [At %date% - %time% - %username%] 完全退出 >> %Command%\date\report.log
+exit
+:del_boot
+if exist %Command%\date\stop_open.f (%error*% & pause >nul & exit) else (goto del_boot.)
+:del_boot.
+echo; >> %Command%\date\report.log
+echo [At %date% - %time% - %username%] 关闭了开机启动 >> %Command%\date\report.log
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v Lock /d "%~dp0%~nx0" /f
+del /f /s /q %Command%\start_command.f
+goto inbox_password
+:safemode
+if not exist %location%%bak*%.%number% cls & echo; & echo %lost-err% & ping /n 5 127.1>nul & goto inbox_password
+set pas=
+cls
+echo;
+%Command%\%app_a% #Rn 关于文件丢失
+echo;
+%Command%\%app_a% #Rn因加密技术限制，你的私密文件夹被加密后可能会遭遇非正常访问，
+%Command%\%app_a% #Rn因此文件采取了后台监控技术，非正常访问你的私密文件夹，监控
+%Command%\%app_a% #Rn会采取相关的保护措施，丢失的文件你可以输入密码访问，如果文
+%Command%\%app_a% #Rn件遭遇意外丢失，访问网站 www.jiakaodashi.com 获取帮助。
+echo;
+set pas=
+%Command%\%app_a% #Wn^>^> #Mn%pas**%
+echo;
+%Command%\%int% -m -p " >> " pas
+if /i "%pas%"=="q" goto inbox_password
+if /i "%pas%"=="" goto pas_error
+if /i "%pas%"=="%password%" goto filelost
+goto pas_error
+:filelost
+echo %wait**%
+attrib -a -s -r -h "%location%%bak*%.%number%" 1>nul 2>nul
+ren "%location%%bak*%.%number%" %bak*% 1>nul 2>nul
+start "" "%location%%bak*%" 1>nul 2>nul
+cls
+echo;
+%Command%\%app_a% #Gn%lost-read%
+echo;
+%Command%\%app_a% #Gn%lost-read1%
+pause >nul
+%Command%\%app_a% #Rn %wait**%
+wmic process where name="wscript.exe" call terminate
+reg add HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\system /v DisableTaskMgr /t reg_dword /d %close*% /f >nul
+Taskkill /f /im explorer.exe >nul 2>nul
+del /f /s /q %location%"%bak*%" >nul 2>nul & rd /s /q "%location%%bak*%" >nul 2>nul
+reg add HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\system /v DisableTaskMgr /t reg_dword /d %close% /f >nul
+start explorer.exe >nul 2>nul
+goto inbox_password
+:uninstall
+if exist %Command%\date\stop_open.f (%error*% & pause >nul & exit) else (goto uninstall.)
+:uninstall.
+rem 卸载
+echo; >> %Command%\date\report.log
+echo [At %date% - %time% - %username%] 请求了卸载 >> %Command%\date\report.log
+cls
+echo;
+set pas=
+%Command%\%app_a% #Wn^>^> #Mn%pas**%
+echo;
+%Command%\%int% -m -p " >> " pas
+if /i "%pas%"=="" goto pas_error
+if /i "%pas%"=="q" goto inbox_password
+if /i "%pas%"=="%password%" goto uninstall_do
+goto pas_error
+rem 确认系统
+:sys_tesing
+set confirm+=1
+if %confirm%==3 goto sys_ok.
+del %TempFile_Name% 1>nul 2>nul
+set TempFile_Name=%SystemRoot%\System32\BatTestUACin_SysRt%Random%.batemp
+(echo "BAT Test UAC in Temp" >%TempFile_Name%) 1>nul 2>nul
+if exist %TempFile_Name% (goto sys_tesing) else (goto sys_ok)
+:uninstall_do
+rem 卸载确认
+cls
+echo;
+%Command%\%app_a% #Rn 执行后会发生以下事件
+echo;
+%Command%\%app_a% #Rn 1：这个程序将被删除
+%Command%\%app_a% #Rn 2：你的私密文件件将被删除
+%Command%\%app_a% #Rn 3：相关文件及备份将被删除
+echo;
+%Command%\%app_a% #Wn 任意键卸载 Q=返回
+set /p choice=
+if /i "%choice%"=="q" goto inbox_password
+if exist %Command%\date\stop_open.f (%error*% & pause >nul & exit) else (goto uninstall..)
+:uninstall..
+cls
+echo;
+%Command%\%app_a% #Rn %wait**%
+wmic process where name="wscript.exe" call terminate
+reg add HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\system /v DisableTaskMgr /t reg_dword /d %close*% /f >nul
+Taskkill /f /im explorer.exe >nul 2>nul
+rem 清理注册表 解锁相关文件 删除相关文件
+reg delete "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v Lock /f >nul 2>nul
+echo y| cacls %0 /c /t /p everyone:f >nul 2>nul
+attrib %0 -r -h -s >nul 2>nul
+echo Y|cacls %Command%\date\Lock.txt /P everyone:F >nul 2>nul
+rem  *********************************************************************************
+del /f /s /q %location%%number*%.%number% >nul 2>nul & rd /s /q %location%%number*%.%number% >nul 2>nul
+del /f /s /q %Command% >nul 2>nul & rd /s /q %Command% >nul 2>nul
+del /f /s /q %location%"%bak*%.%number%" >nul 2>nul & rd /s /q "%location%%bak*%.%number%" >nul 2>nul
+del /f /s /q %location%backups_ >nul 2>nul & rd /s /q %location%backups_ >nul 2>nul
+reg add HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\system /v DisableTaskMgr /t reg_dword /d %close% /f >nul
+start explorer.exe >nul 2>nul
+cls
+echo %uni% & pause >nul & del /f %~dp0%~nx0 >nul 2>nul
+rem 2016.4.4

@@ -1,0 +1,40 @@
+1.什么是异常：
+
+	异常即是一个事件，该事件会在程序执行过程中发生，影响了程序的正常执行。
+	一般情况下，在Python无法正常处理程序时就会发生一个异常。
+	异常是Python对象，表示一个错误。
+	当Python脚本发生异常时我们需要捕获处理它，否则程序会终止执行。
+
+
+2.捕获异常的基本格式
+
+	try:
+	    语句一 # 检测语句一是否存在错误
+
+	except 异常名称:
+	    语句二 # 若语句一存在错误，可捕获错误
+
+	finally:
+	    语句三 # 无论是否存在错误，都会执行finally内代码
+
+3.常见异常名称
+	BaseException        所有异常错误
+	Exception            常规异常错误
+	ZeroDivisionError    除0异常错误
+	ValueError           值类型异常错误
+
+	更多异常错误，可查看：http://www.runoob.com/python/python-exceptions.html
+
+4.raise 抛出异常
+    我们除了可以使用 try-except-finally 格式来捕获异常。
+    我们可以通过raise显示地引发异常。
+    一旦引发raise后面的异常，将终止程序运行。
+
+
+5.assert 断言
+
+    基本格式：
+        assert bool_expression [, arguments]
+
+    如果 bool_expression 为 False，则会抛出 arguments 这个自定义异常信息
+    如果 bool_expression 为 True， 则不会抛出 arguments 这个自定义异常信息

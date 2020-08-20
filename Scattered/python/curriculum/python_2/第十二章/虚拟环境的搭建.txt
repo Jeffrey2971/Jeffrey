@@ -1,0 +1,53 @@
+﻿1.为什么要搭建虚拟环境
+	
+	项目A需要运行在python2环境下，项目B需要运行在python3环境下。
+	项目A和项目B，使用同一个包，但是项目A需要使用该包的1.0版本，项目B需要使用该包的2.0版本。
+
+    那么，创建虚拟环境，可以解决包管理的问题。
+  
+
+ 2.搭建虚拟环境
+
+ 	pip install pipenv
+
+ 	创建一个文件夹
+
+ 	pipenv --three 会使用当前系统的Python3创建环境
+ 	pipenv shell   激活虚拟环境
+ 	pipenv --py    显示Python解释器信息
+
+
+
+ 3.pipenv 常见操作
+ 	# 1.包下载
+	 	# 下载包之前，将国外下载源，更改为国内源
+	 	# url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+
+	pipenv install requests
+	pipenv install requests==2.21.0
+
+
+	# 2.查看当前下载包情况
+
+	pip list
+
+
+	# 3.查看当前包依赖情况
+
+	pipenv graph
+
+	# 4.更新包
+
+	pipenv update requests # 更新requests
+	pipenv update          # 更新所有包
+
+	# 5.卸载包
+	pipenv uninstall requests  # 卸载requests包
+	pipenv uninstall --all     # 卸载全部包并从Pipfile中移除
+
+	# 6.其他操作
+	pipenv check  # 检查安全漏洞
+	exit          # 退出虚拟环境
+
+
+

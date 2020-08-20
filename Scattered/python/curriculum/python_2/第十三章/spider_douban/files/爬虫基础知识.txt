@@ -1,0 +1,91 @@
+1.HTML 知识点
+    超文本标记语言(HyperText Markup Language)，是网页制作必备的编程语言。
+    超文本，可以包含文字、图片、链接，甚至音乐、程序等元素。
+
+    超文本标记语言的结构包括 “头”部分（英语：Head）、和“主体”部分（英语：Body）。
+    其中“头”部提供关于网页的信息，“主体”部分提供网页的具体内容。
+
+    基本格式：
+        <!DOCTYPE html>
+        <html>
+            <head>
+                <meta charset="utf-8">
+                <title>我要自学网</title>
+            </head>
+
+            <body>
+                <h1>这是一级标题</h1>
+                <h2>这是二级标题</h2>
+                <p>这是一段文字</p>
+                <img src="视频水印.png">
+
+                <div>
+                    <ul>hello lemon</ul>
+                    <ul>hello world</ul>
+                </div>
+
+                <h3>这是一个三级标题</h3>
+                <div id="list">
+                    <p>python</p>
+                    <p>Java</p>
+                    <p class="Hadoop">Hadoop</p>
+                </div>
+            </body>
+        </html>
+
+    大家如果对HTML感兴趣的话，可以常见这个网址：http://www.w3school.com.cn/html/index.asp
+
+
+2.Xpath
+    XPath即为XML路径语言（XML Path Language），它是一种用来确定XML文档中某部分位置的语言。
+
+    常用路径表达式：
+        表达式           描述
+
+        /               从根节点选取。
+        //              从匹配选择的当前节点选择文档中的节点，而不考虑它们的位置。
+        @               选取属性。
+
+
+
+3.爬虫原则
+    # 1.明确爬取的内容
+    # 2.分析网页结构，找到目标的标签
+    # 3.分析目标标签，获取目标数据
+    # 4.数据入库
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+4.简单爬虫实战
+    # 1.明确爬取的内容：
+                    正在上映的电影
+    # 2.分析网页结构，找到目标的标签：
+                    div[@id="nowplaying"]/div[@class="mod-bd"]/ul/li
+    # 3.分析目标标签，获取目标数据:
+                    电影名称、电影评分、电影评分人数
+                    电影时长、上映年份、地区、导演、主要演员
+    # 4.数据入库：
+                    写入到json文件里面
+
+
+5.断点调试
+    Mac：        fn + f6 单步调试
+                 fn + f8 跳到下一个断点
+    Windows:
+                 f6 单步调试
+                 f8 跳到下一个断点
+
+

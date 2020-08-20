@@ -1,0 +1,55 @@
+Python零基础入门
+
+第一章 Python起步
+第二章 Python数据类型
+第三章 变量与运算符
+第四章 控制语句执行流程
+第五章 函数的使用
+第六章 面向对象
+第七章 正则表达式
+第八章 Python模块
+第九章 迭代器、生成器与装饰器
+第十章 Python常见高级用法
+第十一章 文件和异常
+第十二章 虚拟环境
+第十三章 简单爬虫实战
+
+
+学完Python基础后，可以继续深入的方向
+
+
+爬虫工程师
+    相关爬虫工具：Scrapy 爬虫框架、Selenium
+    反爬策略 (ip代理池、随机更换 User-Agent、Cookie禁用、自动限速等方式)
+    数据库知识 (如 Mysql Oracle 等)
+
+Web开发工程师
+    相关框架:Django Flask
+    前端知识：Javascript、CSS、HTML
+    数据库知识
+
+数据分析师
+    初级数据分析：
+        数据库相关知识：Mysql Oracle MongoDB Redis
+    中高级数据分析：
+        Python 数据科学常见包: Numpy Pandas Matplotlib Scipy
+        统计学知识：线性代数
+        机器学习常见算法：线性回归法、梯度下降法、PCA、SVM、决策树、随机森林等
+
+大数据方向
+    相关工具：Spark Hadoop
+    其他语言基础：Java SE
+    Linux 相关知识
+
+
+人工智能方向
+    相关框架：TensorFlow（一个完全开源的人工智能框架）、Keras
+    相关工具：Matplotlib ，Numpy，TensorBoard等
+    Linux 相关知识
+
+
+
+
+
+学习是一步步积累的过程，不要担心你此时此刻的付出得不到回报，因为这些付出都是为了更好的扎根。
+成长需要扎根，需要耐心等待，一时的领先代表不了什么，能够笑到最后夺得最后胜利的人才是大赢家。

@@ -1,0 +1,43 @@
+1.Python open函数
+   open(file, mode='r', buffering=-1, encoding=None, errors=None, newline=None,
+        closefd=True, opener=None)
+
+
+ 参数说明：
+    file:      必需，文件路径（相对或者绝对路径）。
+    mode:      可选，文件打开模式
+    encoding:  一般使用utf-8
+
+    buffering: 设置缓冲
+    errors:    报错级别
+    newline:   区分换行符
+    closefd:   传入的file参数类型
+
+ mode 常用参数：
+    r	以只读方式打开文件。
+
+    w   以只写方式打开文件。
+        如果该文件不存在，创建新文件。
+        如果该文件已存在，则覆盖原文件。
+
+    a   打开一个文件用于追加。
+        如果该文件已存在，则在最尾处追加写入。
+        如果该文件不存在，创建新文件进行写入。
+
+    更多mode参数说明，可访问：http://www.runoob.com/python/file-methods.html
+
+
+2.文件的读取格式
+    with open(file = 'file_path',mode = 'r',encoding = 'utf-8') as f:
+        data  = f.read()      # 返回整个文件数据，如果文件较大，不建议用这种方法。
+        data1 = f.readline()  # 返回一行数据。
+        data2 = f.readlines() # 以列表格式，返回整个文件数据
+
+3.文件的写入格式
+    with open(file = 'file_path',mode = 'w',encoding = 'utf-8') as f:
+        file.write(str)           # 将字符串写入文件。
+        file.writelines(sequence) # 向文件写入一个序列字符串列表，如果需要换行则要自己加入换行符。
+
+
+
+

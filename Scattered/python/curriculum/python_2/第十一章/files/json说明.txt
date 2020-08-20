@@ -1,0 +1,31 @@
+1.JSON(JavaScript Object Notation)特点：
+    (1) JSON 是一种轻量级的数据交换格式，易于人阅读和编写。
+    (2) JSON 具有通用性，支持几乎所有的语言。
+    (3) JSON 支持跨平台，支持 windows，Linux，Mac平台。
+
+
+2.常用JSON函数
+    json.dumps	将 Python 对象编码成 JSON 字符串
+    json.loads	将 已编码的 JSON 字符串解码为 Python 对象
+
+    json.dump   将 JSON 字符串数据写进文件
+    json.load   读取 JSON 文件里面的数据
+
+    python      {'python': 1, 'Java': 2, 'Hadoop': 3}
+                {"python": 1, "Java": 2, "Hadoop": 3}
+
+    JSON       '{"python": 1, "Java": 2, "Hadoop": 3}'
+
+
+3.Python 与 JSON 类型转换
+
+    Python	            JSON
+
+    dict	            object
+    list, tuple	        array
+    str          	    string
+    int,float	        number
+    True	            true
+    False	            false
+    None	            null
+

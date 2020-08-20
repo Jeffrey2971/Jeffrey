@@ -1,0 +1,15 @@
+1、下载 Pycharm
+2、注册GitHub
+2、官网下载 GitBash
+3、打开 GitBash 设置全局user.name和user.email
+git config --global user.name 'Jeffrey'
+git config --global user.email 'Jeffrey2971@outlook.com'
+4、生产一个公钥
+ssh-keygen -t rsa -C 'Jeffrey2971@outlook.com'
+5、找到密钥生成文件木.ssh并在里面找到id_rsa.pub文件并复制里面的密钥
+6、再GitHub官网内找到settings再找到SSH和GPG keys,新建一个New ssh key并在窗口内粘贴刚刚复制的密钥
+7、返回gitbash输入ssh git@github.com 测试是否成功
+8、打开pycharm->settings->Version Control->点击Github并输入注册GitHub时的账户名和密码
+9、打开VCS->Import into Version Control->Share Project on GitHub映射项目到GitHub
+
+
