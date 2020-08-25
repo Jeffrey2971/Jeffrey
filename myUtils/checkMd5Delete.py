@@ -5,7 +5,7 @@ import os
 根据计算 md5 删除指定路径中相同的文件
 """
 
-path = r"/Users/jeffrey/PycharmProjects"
+path = r"/Users/jeffrey/Desktop/xmind"
 
 
 def run():
@@ -24,8 +24,8 @@ def run():
                     else:
                         sameList.append(file_path)
                         delList.append(file_path)
-            except:
-                pass
+            except Exception as e:
+                print("发生异常：" + str(e))
 
     for i in delList:
         try:
